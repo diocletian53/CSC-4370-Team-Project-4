@@ -27,9 +27,6 @@ mysqli_query($con, $query_create_users_table) or die(mysqli_error($con));
 
 echo "Table 'users' created successfully";
 
-// Select 'user' database for further operations
-mysqli_select_db($con, 'user') or die(mysqli_error($con));
-
 // Create 'album' table
 $query_create_album_table = "CREATE TABLE IF NOT EXISTS `album` (
     `id` INT AUTO_INCREMENT PRIMARY KEY,
@@ -43,4 +40,17 @@ $query_create_album_table = "CREATE TABLE IF NOT EXISTS `album` (
 mysqli_query($con, $query_create_album_table) or die(mysqli_error($con));
 
 echo "Table 'album' created successfully";
+
+// Create 'artist' table
+$query_create_artist_table = "CREATE TABLE IF NOT EXISTS `artist` (
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `artistname` VARCHAR(255) NOT NULL,
+    `artistemail` VARCHAR(255) NOT NULL,
+    `artistphone` VARCHAR(20) NOT NULL,
+    `date` DATETIME NOT NULL
+)";
+mysqli_query($con, $query_create_artist_table) or die(mysqli_error($con));
+
+echo "Table 'artist' created successfully";
+
 ?>

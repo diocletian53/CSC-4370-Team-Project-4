@@ -12,14 +12,21 @@ if (!isset($_SESSION["username"])) {
 if (isset($_POST['submit'])) {
     $search_query = $_POST['search_query'];
     $username = $_SESSION['username'];
-    $query = "SELECT * FROM album WHERE (title LIKE '%$search_query%' OR typeofalbum LIKE '%$search_query%' OR material LIKE '%$search_query%') AND username='$username'";
-    $result = mysqli_query($con, $query);
+
+    // Search for albums
+    $album_query = "SELECT * FROM album WHERE (title LIKE '%$search_query%' OR typeofalbum LIKE '%$search_query%' OR material LIKE '%$search_query%') AND username='$username'";
+    $album_result = mysqli_query($con, $album_query);
+
+    // Search for artists
+    $artist_query = "SELECT * FROM artist WHERE artistname LIKE '%$search_query%'";
+    $artist_result = mysqli_query($con, $artist_query);
 
     // Check for query execution success
-    if ($result) {
-        if ($result->num_rows > 0) {
-            echo "<h2>Search Results:</h2>";
-            while ($row = $result->fetch_assoc()) {
+    if ($album_result && $artist_result) {
+        // Display album search results
+        if ($album_result->num_rows > 0) {
+            echo "<h2>Album Search Results:</h2>";
+            while ($row = $album_result->fetch_assoc()) {
                 echo "<div class='search-result'>";
                 echo "<strong>Title:</strong> " . $row["title"] . "<br>";
                 echo "<strong>Type:</strong> " . $row["typeofalbum"] . "<br>";
@@ -29,32 +36,23 @@ if (isset($_POST['submit'])) {
                 echo "</div>";
             }
         } else {
-            echo "No results found for '$search_query'";
+            echo "No album results found for '$search_query'";
         }
-    } else {
-        echo "Error executing query: " . mysqli_error($con);
-    }
-} else {
-    // Display user's materials
-    $username = $_SESSION['username'];
-    $query = "SELECT * FROM album WHERE username='$username'";
-    $result = mysqli_query($con, $query);
 
-    // Check for query execution success
-    if ($result) {
-        if ($result->num_rows > 0) {
-            echo "<h2>Your Materials:</h2>";
-            while ($row = $result->fetch_assoc()) {
-                echo "<div class='material'>";
-                echo "<strong>Title:</strong> " . $row["title"] . "<br>";
-                echo "<strong>Type:</strong> " . $row["typeofalbum"] . "<br>";
-                echo "<strong>Material:</strong> " . $row["material"] . "<br>";
-                echo "<strong>Price:</strong> $" . $row["price"] . "<br>";
+        // Display artist search results
+        if ($artist_result->num_rows > 0) {
+            echo "<h2>Artist Search Results:</h2>";
+            while ($row = $artist_result->fetch_assoc()) {
+                echo "<div class='search-result'>";
+                echo "<strong>Artist Name:</strong> " . $row["artistname"] . "<br>";
+                echo "<strong>Email:</strong> " . $row["artistemail"] . "<br>";
+                echo "<strong>Phone:</strong> " . $row["artistphone"] . "<br>";
+                echo "<strong>Date:</strong> " . $row["date"] . "<br>";
                 echo "----------------------------------------<br>";
                 echo "</div>";
             }
         } else {
-            echo "No materials found.";
+            echo "No artist results found for '$search_query'";
         }
     } else {
         echo "Error executing query: " . mysqli_error($con);
@@ -77,13 +75,13 @@ if (isset($_POST['submit'])) {
         <p>Welcome <?php echo $_SESSION['username']; ?>!</p>
 
         <!-- Search Form -->
-        <h2>Search Material</h2>
+        <h2>Search</h2>
         <form action="" method="post" name="search">
-            <input type="text" name="search_query" placeholder="Search by Title, Type, or Material" required />
+            <input type="text" name="search_query" placeholder="Search by Title, Type, Material, or Artist Name" required />
             <input type="submit" name="submit" value="Search" />
         </form>
 
-        <!-- Display Search Results or User's Materials -->
+        <!-- Display Search Results -->
         <?php
         // Display handled above in PHP
         ?>
