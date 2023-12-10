@@ -1,7 +1,6 @@
 <?php
 require('db.php');
 
-// If form submitted, insert values into the database.
 if (isset($_POST['submit'])) {
     $username = stripslashes($_REQUEST['username']);
     $username = mysqli_real_escape_string($con, $username);
@@ -15,14 +14,20 @@ if (isset($_POST['submit'])) {
 
     $trn_date = date("Y-m-d H:i:s");
 
-    $query = "INSERT into `users` (username, password, email, trn_date) VALUES ('$username', '$hashed_password', '$email', '$trn_date')";
+    // Added code to handle user_type
+    $user_type = mysqli_real_escape_string($con, $_POST['user_type']);
+
+    $query = "INSERT into `users` (username, password, email, user_type, trn_date) VALUES ('$username', '$hashed_password', '$email', '$user_type', '$trn_date')";
     $result = mysqli_query($con, $query);
 
     if ($result) {
-        echo "<div class='form'><h3>You are registered successfully.</h3><br/>Click here to <a href='login.php'>Login</a></div>";
+        echo "<div class='form'><h3>You are registered successfully.</h3>";
+        echo "<meta http-equiv='refresh' content='2;url=login.php'>";
+        echo "</div>";
     } else {
         echo "<div class='form'><h3>Registration failed: " . mysqli_error($con) . "</h3><br/>Click here to <a href='registration.php'>Register</a></div>";
     }
+    
 } else {
 ?>
 <!DOCTYPE html>
@@ -113,6 +118,15 @@ if (isset($_POST['submit'])) {
                 <input type="email" name="email" placeholder="Email" required />
                 <input type="password" name="password" placeholder="Password" required />
                 <input type="submit" name="submit" value="Register" />
+                <select name="user_type" required>
+                <option value="buyer">Buyer</option>
+                <option value="seller">Seller</option>
+                  <option value="admin">Admin</option>
+                    </select>
+   
+
+
+
             </form>
             <br /><br />
         </div>

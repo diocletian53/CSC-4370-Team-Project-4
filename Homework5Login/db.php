@@ -20,9 +20,11 @@ $query_create_users_table = "CREATE TABLE IF NOT EXISTS `users` (
     `username` varchar(50) NOT NULL,
     `email` varchar(50) NOT NULL,
     `password` varchar(255) NOT NULL,
+    `user_type` varchar(20) NOT NULL,  -- New column for user type
     `trn_date` datetime NOT NULL,
     PRIMARY KEY (`id`)
 )";
+
 mysqli_query($con, $query_create_users_table) or die(mysqli_error($con));
 
 echo "Table 'users' created successfully";

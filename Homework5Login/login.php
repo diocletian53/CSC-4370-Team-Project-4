@@ -17,24 +17,20 @@ if (isset($_POST['username'])) {
         if (password_verify($password, $row['password'])) {
             $_SESSION['username'] = $username;
 
-            // Check the selected user type from the dropdown
-            $userType = $_POST['user_type'];
-            switch ($userType) {
+            // Check user type and redirect accordingly
+            switch ($row['user_type']) {
                 case 'seller':
                     header("Location: dashboard.php");
                     break;
                 case 'buyer':
-                    // Redirect to buyer dashboard (replace 'buyer_dashboard.php' with the actual buyer dashboard file)
                     header("Location: buyer_dashboard.php");
                     break;
                 case 'admin':
-                    // Redirect to admin dashboard (replace 'admin_dashboard.php' with the actual admin dashboard file)
                     header("Location: admin_dashboard.php");
                     break;
                 default:
-                    // Default redirection (index.php in this case)
+                    // Redirect to a default page if user type is not recognized
                     header("Location: index.php");
-                    break;
             }
         } else {
             echo "<div class='form'><h3>Password is incorrect.</h3><br/>Click here to <a href='login.php'>Login</a></div>";
@@ -43,16 +39,16 @@ if (isset($_POST['username'])) {
         echo "<div class='form'><h3>Username not found.</h3><br/>Click here to <a href='login.php'>Login</a></div>";
     }
 } else {
-?>
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <title>Login Form</title>
-    <link rel="stylesheet" href="css/style.css" />
-</head>
-<style>
-        body {
+    ?>
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="utf-8">
+        <title>Login Form</title>
+        <link rel="stylesheet" href="css/style.css" />
+    </head>
+    <style>
+          body {
             font-family: 'Arial', sans-serif;
             background-color: #f5f5f5;
             margin: 0;
@@ -118,8 +114,8 @@ if (isset($_POST['username'])) {
             margin-top: 20px;
             color: #666;
         }
-</style>
-<body>
+    </style>
+    <body>
     <div class="container">
         <div class="header">
             <h1>Welcome to Our Site</h1>
@@ -129,12 +125,6 @@ if (isset($_POST['username'])) {
             <form action="" method="post" name="login">
                 <input type="text" name="username" placeholder="Username" required>
                 <input type="password" name="password" placeholder="Password" required>
-                <!-- Add a dropdown menu for user type -->
-                <select name="user_type">
-                    <option value="seller">Seller</option>
-                    <option value="buyer">Buyer</option>
-                    <option value="admin">Admin</option>
-                </select>
                 <button type="submit">Login</button>
             </form>
             <p>Not registered yet? <a href='registration.php'>Register Here</a></p>
@@ -145,6 +135,8 @@ if (isset($_POST['username'])) {
     <div class="footer">
         <h6>&copy; 2017</h6>
     </div>
-</body>
-</html>
-<?php } ?>
+    </body>
+    </html>
+    <?php
+}
+?>

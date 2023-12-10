@@ -93,7 +93,7 @@ footer {
         <li><a href="#saved-properties">Saved Properties</a></li>
         <li><a href="#search">Property Search</a></li>
         <li><a href="#profile">Profile</a></li>
-        <li><a href="#logout">Logout</a></li>
+        <li><a href="logout.php">Logout</a></li>
     </ul>
 </nav>
 

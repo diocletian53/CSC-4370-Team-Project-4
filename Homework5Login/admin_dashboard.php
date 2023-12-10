@@ -111,7 +111,7 @@ footer {
         <li><a href="#properties">Manage Properties</a></li>
         <li><a href="#users">Manage Users</a></li>
         <li><a href="#reports">Reports</a></li>
-        <li><a href="#logout">Logout</a></li>
+        <li><a href="logout.php">Logout</a></li>
     </ul>
 </nav>
 
