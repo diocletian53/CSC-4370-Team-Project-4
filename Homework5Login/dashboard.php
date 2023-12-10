@@ -107,6 +107,7 @@ $properties = getAllProperties($con);
         // Display properties
         if ($properties) {
             while ($row = mysqli_fetch_assoc($properties)) {
+                
                 echo "<div class='property-card'>";
                 $imagePath = !empty($row['image']) ? 'upload/' . $row['image'] : 'build.jpg';
                 echo "<img src='" . $imagePath . "' alt='Property Image' />";
@@ -122,7 +123,11 @@ $properties = getAllProperties($con);
                 echo "<p>Property Tax: $" . $row['property_tax'] . "</p>";
                 echo "<p>Price: $" . $row['price'] . "</p>";
                 echo "<a href='view_property.php?id=" . $row['id'] . "'>View Details</a>";
+                echo "<a href='edit_property.php?id=" . $row['id'] . "'>Edit Property</a>";
+                echo "<a href='delete_property.php?id=" . $row['id'] . "'>Delete Property</a>";
+
                 echo "</div>";
+                
             }
         } else {
             echo "<p>No properties found. Click the button below to add a new property.</p>";
@@ -135,7 +140,9 @@ $properties = getAllProperties($con);
         <a href="logout.php">Logout</a>
         <br /><br />
         <a href="index.php">Go to Index</a>
+        
     </div>
+    
     <div class="footer"><h6>@copyrights- 2017</h6></div>
 </div>
 
