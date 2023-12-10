@@ -27,6 +27,74 @@ if (isset($_POST['submit'])) {
 ?>
 <!DOCTYPE html>
 <html>
+<style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 400px;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            text-align: center;
+            color: #003366; /* Zillow's blue color */
+        }
+
+        .form {
+            text-align: center;
+        }
+
+        h2 {
+            color: #003366; /* Zillow's blue color */
+        }
+
+        input {
+            margin-bottom: 15px;
+            padding: 10px;
+            width: 100%;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        input[type="submit"] {
+            background-color: #003366; /* Zillow's blue color */
+            color: #fff;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #004080; /* Darker blue color for hover effect */
+        }
+
+        p {
+            color: #555;
+        }
+
+        a {
+            color: #003366; /* Zillow's blue color */
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            color: #666;
+        }
+    </style>
 
 <head>
     <meta charset="utf-8">
