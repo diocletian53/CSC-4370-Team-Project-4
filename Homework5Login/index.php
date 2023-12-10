@@ -88,6 +88,8 @@ if (isset($_POST['submit'])) {
 
         <p> To enter new album data <a href="album.php" target="_blank">Click Here</a></p>
         <p> To enter new artist data <a href="artist.php" target="_blank">Click Here</a></p>
+        <p> To enter new property <a href="add_property.php" target="_blank">Click Here</a></p>
+
         <a href="logout.php">Logout</a>
     </div>
     <div class="footer"><h6>@copyrights- 2017</h6></div>

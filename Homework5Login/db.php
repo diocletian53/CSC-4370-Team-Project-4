@@ -53,4 +53,26 @@ mysqli_query($con, $query_create_artist_table) or die(mysqli_error($con));
 
 echo "Table 'artist' created successfully";
 
+
+// Create 'properties' table if it doesn't exist
+$query_create_properties_table = "CREATE TABLE IF NOT EXISTS `properties` (
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `user_id` INT NOT NULL,
+    `location` VARCHAR(255) NOT NULL,
+    `age` INT NOT NULL,
+    `floor_plan` VARCHAR(255) NOT NULL,
+    `num_bedrooms` INT NOT NULL,
+    `facilities` VARCHAR(255) NOT NULL,
+    `garden_presence` BOOLEAN NOT NULL,
+    `parking_availability` BOOLEAN NOT NULL,
+    `proximity_facilities` VARCHAR(255) NOT NULL,
+    `proximity_roads` VARCHAR(255) NOT NULL,
+    `property_tax` DECIMAL(10, 2) NOT NULL,
+    `price` DECIMAL(10, 2) NOT NULL,
+    `trn_date` DATETIME NOT NULL
+)";
+mysqli_query($con, $query_create_properties_table) or die(mysqli_error($con));
+
+
+echo "Table 'properties' created successfully";
 ?>
