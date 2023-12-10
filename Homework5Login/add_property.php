@@ -39,12 +39,89 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     exit();
 }
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
     <title>Add Property</title>
     <link rel="stylesheet" href="css/style.css" />
+    <style>
+        /* Additional CSS styles for better appearance */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 80%;
+            margin: 20px auto;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            border-radius: 8px 8px 0 0;
+        }
+
+        .header h1 {
+            margin: 0;
+        }
+
+        .form {
+            padding: 20px;
+        }
+
+        form label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        form input, form textarea, form select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+
+        form input[type="checkbox"] {
+            width: auto;
+            margin-top: 5px;
+        }
+
+        .form input[type="submit"] {
+            background-color: #4CAF50;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .form a {
+            display: block;
+            margin-top: 10px;
+            text-align: center;
+            color: #4CAF50;
+            text-decoration: none;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #333;
+            color: #fff;
+            border-radius: 0 0 8px 8px;
+        }
+    </style>
 </head>
 <body>
 
@@ -84,7 +161,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             <input type="submit" value="Add Property" />
         </form>
-        <br /><br />
+        <br />
         <a href="dashboard.php">Back to Dashboard</a>
     </div>
     <div class="footer"><h6>@copyrights- 2017</h6></div>

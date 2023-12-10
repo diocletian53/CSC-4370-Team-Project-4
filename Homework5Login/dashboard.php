@@ -94,7 +94,19 @@ $properties = getAllProperties($con);
             background-color: #333;
             color: #fff;
             border-radius: 0 0 8px 8px;
-        }    </style>
+        }  
+        
+    .add-property-link {
+        background-color: #4CAF50;
+        color: #fff;
+        padding: 10px 15px;
+        border-radius: 5px;
+        text-decoration: none;
+        font-weight: bold;
+        display: inline-block;
+    }
+        
+        </style>
 </head>
 <body>
 
@@ -135,7 +147,7 @@ $properties = getAllProperties($con);
         ?>
 
         <br /><br />
-        <a href="add_property.php">Add New Property</a>
+        <a href="add_property.php" class="add-property-link">+ Add New Property</a>
         <br /><br />
         <a href="logout.php">Logout</a>
         <br /><br />
