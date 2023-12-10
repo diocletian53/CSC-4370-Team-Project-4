@@ -39,20 +39,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Check credentials from the respective table
-    $sql = "SELECT * FROM $tableName WHERE bUsername = ? AND bPassword = ?";
+    $sql = "SELECT bPassword FROM $tableName WHERE bUsername = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ss", $username, $password);
+    $stmt->bind_param("s", $username);
     $stmt->execute();
     $result = $stmt->get_result();
+	
+	if ($result->num_rows == 1) {
+        $row = $result->fetch_assoc();
+        $hashedPassword = $row['bPassword'];
 
-    if ($result->num_rows == 1) {
+    if (password_verify($password, $hashedPassword)) {
         // Valid login, set session variables and redirect to respective page
         $_SESSION['username'] = $username;
         $_SESSION['role'] = $role;
         header("Location: $redirectPage");
         exit;
-    } else {
-        echo "Invalid username or password";
+		
+		} else {
+			echo "Invalid username or password1";
+		}
+	
+	}	else {
+			echo "Invalid username or password";
     }
 
     $stmt->close();

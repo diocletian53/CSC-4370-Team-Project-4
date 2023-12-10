@@ -16,32 +16,33 @@ if($conn->connect_error) {
 else {
     echo "Connection established \n";
 }
+$sqlBuyers = " CREATE TABLE IF NOT EXISTS BUYERS (
+	bID int(6) UNSIGNED AUTO_INCREMENT PRIMARY kEY,
+	bFName VARCHAR(30) NOT NULL,
+	bLName VARCHAR(30) NOT NULL,
+	bUsername VARCHAR(30) NOT NULL UNIQUE,
+	bPassword VARCHAR(255) NOT NULL)";
 
-$sql = " CREATE TABLE IF NOT EXISTS BUYERS (
-	bID int(6) UNSIGNED AUTO_INCREMENT PRIMARY kEY,
+$sqlSellers = " CREATE TABLE IF NOT EXISTS SELLERS (
+	sID int(6) UNSIGNED AUTO_INCREMENT PRIMARY kEY,
 	bFName VARCHAR(30) NOT NULL,
 	bLName VARCHAR(30) NOT NULL,
 	bUsername VARCHAR(30) NOT NULL UNIQUE,
-	bPassword VARCHAR(30) NOT NULL)";
-
-$sql = " CREATE TABLE IF NOT EXISTS SELLERS (
-	bID int(6) UNSIGNED AUTO_INCREMENT PRIMARY kEY,
-	bFName VARCHAR(30) NOT NULL,
-	bLName VARCHAR(30) NOT NULL,
-	bUsername VARCHAR(30) NOT NULL UNIQUE,
-	bPassword VARCHAR(30) NOT NULL)";
+	bPassword VARCHAR(255) NOT NULL)";
 	
-$sql = " CREATE TABLE IF NOT EXISTS ADMINS (
-	bID int(6) UNSIGNED AUTO_INCREMENT PRIMARY kEY,
+$sqlAdmins = " CREATE TABLE IF NOT EXISTS ADMINS (
+	aID int(6) UNSIGNED AUTO_INCREMENT PRIMARY kEY,
 	bFName VARCHAR(30) NOT NULL,
 	bLName VARCHAR(30) NOT NULL,
 	bUsername VARCHAR(30) NOT NULL UNIQUE,
-	bPassword VARCHAR(30) NOT NULL)";
+	bPassword VARCHAR(255) NOT NULL)";
 	
-if ($conn ->query($sql) === TRUE){
-	echo "table successful \n";
+if ($conn->query($sqlBuyers) === TRUE &&
+    $conn->query($sqlSellers) === TRUE &&
+    $conn->query($sqlAdmins) === TRUE) {
+    echo "Tables created successfully \n";
 } else {
-	echo "fuck" . $conn->error;
+    echo "Error creating tables: " . $conn->error;
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -50,6 +51,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $bUsername = $_POST["bUsername"];
     $bPassword = $_POST["bPassword"];
 	$role = $_POST["role"];
+	
+	
 	
 	// Determine table name based on role selected
     switch ($role) {
@@ -66,17 +69,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             echo "Invalid role selected";
             exit;
     }
-
-    // SQL to insert data
+	
+	// Hash the password securely
+	$hashedPassword = password_hash($bPassword, PASSWORD_DEFAULT);
+	// SQL to insert data
     $sql = "INSERT INTO $tableName (bFName, bLName, bUsername, bPassword) VALUES (?, ?, ?, ?)";
     
     // Prepare and bind the statement
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssss", $bFName, $bLName, $bUsername, $bPassword);
+
+	// Check for a prepared statement error
+	if ($stmt === false) {
+		die('Error in SQL: ' . htmlspecialchars($conn->error));
+	}
+
+    $stmt->bind_param("ssss", $bFName, $bLName, $bUsername, $hashedPassword);
 
     if ($stmt->execute()) {
 		header("Location: login.php");
-       // echo "New record inserted successfully \n";
+        echo "New record inserted successfully \n";
     } else {
         echo "Error inserting data: " . $conn->error;
     }
