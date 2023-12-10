@@ -16,7 +16,26 @@ if (isset($_POST['username'])) {
         $row = mysqli_fetch_assoc($result);
         if (password_verify($password, $row['password'])) {
             $_SESSION['username'] = $username;
-            header("Location: index.php"); // Redirect user to index.php after successful login
+
+            // Check the selected user type from the dropdown
+            $userType = $_POST['user_type'];
+            switch ($userType) {
+                case 'seller':
+                    header("Location: dashboard.php");
+                    break;
+                case 'buyer':
+                    // Redirect to buyer dashboard (replace 'buyer_dashboard.php' with the actual buyer dashboard file)
+                    header("Location: buyer_dashboard.php");
+                    break;
+                case 'admin':
+                    // Redirect to admin dashboard (replace 'admin_dashboard.php' with the actual admin dashboard file)
+                    header("Location: admin_dashboard.php");
+                    break;
+                default:
+                    // Default redirection (index.php in this case)
+                    header("Location: index.php");
+                    break;
+            }
         } else {
             echo "<div class='form'><h3>Password is incorrect.</h3><br/>Click here to <a href='login.php'>Login</a></div>";
         }
@@ -99,9 +118,9 @@ if (isset($_POST['username'])) {
             margin-top: 20px;
             color: #666;
         }
-    </style>
+</style>
 <body>
-<div class="container">
+    <div class="container">
         <div class="header">
             <h1>Welcome to Our Site</h1>
         </div>
@@ -110,6 +129,12 @@ if (isset($_POST['username'])) {
             <form action="" method="post" name="login">
                 <input type="text" name="username" placeholder="Username" required>
                 <input type="password" name="password" placeholder="Password" required>
+                <!-- Add a dropdown menu for user type -->
+                <select name="user_type">
+                    <option value="seller">Seller</option>
+                    <option value="buyer">Buyer</option>
+                    <option value="admin">Admin</option>
+                </select>
                 <button type="submit">Login</button>
             </form>
             <p>Not registered yet? <a href='registration.php'>Register Here</a></p>
